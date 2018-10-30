@@ -11,9 +11,16 @@ class gridcell{
         unsigned char neighborhood[8];
 
     public:
+
+        // constructor and destructor
         gridcell(int x,int y);
         gridcell(){}
-        // Getters
+        ~gridcell();
+
+        // methods of class
+        int count_live_neighbors();
+
+        // Setters
         void set_state(unsigned char ch){
             state = ch;
         }
@@ -23,7 +30,7 @@ class gridcell{
             neighborhood[i] = a;
         }
 
-        //Setters
+        //Getters
         unsigned char get_state(){
             return state;
         }
@@ -32,7 +39,6 @@ class gridcell{
         unsigned char *get_neighborhood(){
             return neighborhood;
         }
-        int count_live_neighbors();
 
     friend std::ostream& operator<< (std::ostream &, gridcell &);
 
