@@ -9,34 +9,12 @@
 
 using namespace std;
 
-
-// int main(){
-//     srand(time(NULL));
-//     int x,y,l;
-//     cin >> x >> y >> l;
-//     gridcell **grids = new gridcell*[x];
-//     for(int i=0;i<x;i++){
-//         grids[i] = new gridcell[y];
-//     }
-//     grid g(grids,x,y);
-//     if(l <= (x-2)*(y-2) && x > 0 && y > 0 && l > 0){
-//         g.generate_initial_state (l);
-//         cout << g << endl;
-//         g.update_neighborhood();
-//         int test=0;
-//         for(int i =0 ;i<5;i++){
-//             test = g.generate_next_state();
-//             if(test == 1) break;
-//             cout << g << endl;
-//         }
-//         cout << g << endl;
-//     }
-//     return 0;
-// }
-
-int main(){
+int main(int argc, char *argv[]){
     srand(time(NULL));
-    ifstream input_file("input.txt");
+    int nGen = stoi(argv[2]);
+    string filename = argv[1];
+    ifstream input_file(filename);
+    ofstream out_file("output.txt");
     if(input_file.is_open()){
         string line;
         getline(input_file,line);
@@ -47,10 +25,10 @@ int main(){
             in.push_back(word);
         }
 
-        int nRows,nColums,nGen;
+        int nRows,nColums;
         nRows = stoi(in[0]);
         nColums = stoi(in[1]);
-        nGen = stoi(in[2]);
+        int valid = stoi(in[2]);
         gridcell **grids = new gridcell*[nRows];
         for(int i=0;i<nRows;i++){
             grids[i] = new gridcell[nColums];
@@ -58,6 +36,7 @@ int main(){
         int i=0;
         while(getline(input_file,line)){
             int j=0;
+            if(line[0] == 'e') break;
             for(int k=0;k<line.size();k+=2){
                 // if(line[j] == ' ');
                 if(line[k] == 'o') grids[i][j].set_state((unsigned char)'0');
@@ -76,7 +55,18 @@ int main(){
             cout << g << endl;
         }
         cout << g << endl;
-
+        if(test == 1 || nGen != 0) out_file << "0 0 0" << endl;
+        else{
+            out_file << g.get_num_rows() << " " << g.get_num_colums() << " " << nGen << endl;
+            for(int i=0;i<g.get_num_rows();i++){
+                for(int j=0;j<g.get_num_colums();j++){
+                    if(g.get_cell(i,j).get_state() == '1') out_file << "+ ";
+                    if(g.get_cell(i,j).get_state() == '0') out_file << "o ";
+                }
+                out_file << endl;
+            }
+        }
+        out_file << "eof" << endl;
     }
     else cout << "Unable to open file" << endl;
     return 0;

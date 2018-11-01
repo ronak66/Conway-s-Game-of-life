@@ -1,7 +1,8 @@
-6 6 2
+6 6 0
 o o o o o o
-o o o o o o
+o + o o o o
+o o o + o o
 o o + + o o
-o o + + o o
+o + o o + o
 o o o o o o
-o o o o o o
+eof
