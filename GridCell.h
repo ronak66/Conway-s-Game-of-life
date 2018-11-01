@@ -15,7 +15,11 @@ class gridcell{
         // constructor and destructor
         gridcell(int x,int y);
         gridcell(){}
+        //copy constructor
+        gridcell(gridcell&);
+        void operator=(gridcell& );
         ~gridcell();
+
 
         // methods of class
         int count_live_neighbors();

@@ -14,13 +14,17 @@ class grid{
 
         // constructor and destructor
         grid(gridcell **grids, int num_rows,int num_colums);
+        // Copy constructor
+        grid(grid&);
+        void operator=(grid& );
         ~grid();
 
         // Class methods
-        void generate_initial_state(int l);
+        void generate_initial_state(int );
         void update_neighborhood();
         void print_grid();
-        void generate_next_state();
+        int generate_next_state();
+        int valid_grid_check();
 
         // Getters
         gridcell get_cell(int i,int j){

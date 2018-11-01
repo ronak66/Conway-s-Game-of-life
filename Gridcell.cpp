@@ -7,6 +7,26 @@ using namespace std;
 gridcell::gridcell(int x, int y): x(x), y(y) {
 
 }
+// copy constructor
+gridcell::gridcell(gridcell& old_cell){
+    x = old_cell.x;
+    y = old_cell.y;
+    state = old_cell.get_state();
+    // unsigned char *a = old_cell.get_neighborhood();
+    for(int i=0;i<8;i++){
+        neighborhood[i] = old_cell.neighborhood[i];
+    }
+}
+// overloading equall operator
+void gridcell::operator=(gridcell& old_cell){
+    x = old_cell.x;
+    y = old_cell.y;
+    state = old_cell.get_state();
+    // unsigned char *a = old_cell.get_neighborhood();
+    for(int i=0;i<8;i++){
+        neighborhood[i] = old_cell.neighborhood[i];
+    }
+}
 gridcell::~gridcell(){
 
 }
