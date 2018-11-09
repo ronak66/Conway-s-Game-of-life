@@ -5,7 +5,7 @@
 using namespace std;
 
 // Constructor and Destructor
-grid::grid(gridcell **grids,int num_rows,int num_colums,int Gx,int Gy):grids(grids),num_rows(num_rows),num_colums(num_colums),Gx(Gx),Gy(Gy){
+grid::grid(gridcell **grids,int num_rows,int num_colums):grids(grids),num_rows(num_rows),num_colums(num_colums){
     for(int i=0;i<num_rows;i++){
         for(int j=0;j<num_colums;j++){
             grids[i][j].set_x(i);
@@ -47,10 +47,7 @@ grid::~grid(){
 }
 
 // Getters and setters
-void grid::set_grids(gridcell **a,int numrows,int numcolums){
-    grids = a;
-    num_rows = numrows;
-    num_colums = numcolums;
+void grid::set_grids(gridcell **a,int num_rows,int num_colums){
     for(int i=0;i<num_rows;i++){
         for(int j=0;j<num_colums;j++){
             grids[i][j].set_x(i);
@@ -124,7 +121,7 @@ int grid::generate_next_state(){
             if(i == 0 || j == 0 || i == num_rows-1 || j == num_colums-1){
                 if(grids[i][j].get_state() == '1'){
                     flag = 1;
-                    // cout << "Invalid generation" << endl;
+                    cout << "Invalid generation" << endl;
                     break;
                 }
             }
@@ -178,54 +175,6 @@ int grid::valid_grid_check(){
     return 1;
 }
 
-void grid::make_live(){
-    for(int i=0;i<num_rows;i++){
-        for(int j=0;j<num_colums;j++){
-            grids[i][j].set_state('0');
-        }
-    }
-    int total = num_rows*num_colums;
-    int num_of_live_cells = (total*55)/100;
-    if((total*55)%100 != 0) num_of_live_cells++;
-    while(num_of_live_cells){
-        int x = (((int)rand())%(num_rows-2)) + 1;
-        int y = (((int)rand())%(num_colums-2)) + 1;
-        if(grids[x][y].get_state() == '0'){
-            grids[x][y].set_state('1');
-            num_of_live_cells--;
-        }
-    }
-    update_neighborhood();
-}
-
-void grid::make_dead(){
-    for(int i=0;i<num_rows;i++){
-        for(int j=0;j<num_colums;j++){
-            // if(i ==0 or j==0 or i==num_rows-1 or j==num_colums-1) grids[i][j].set_state('0');
-            grids[i][j].set_state('0');
-        }
-    }
-    int total = num_rows*num_colums;
-    int num_of_live_cells = (total*45)/100;
-    if((total*45)%100 != 0) num_of_live_cells++;
-    while(num_of_live_cells){
-        int x = (((int)rand())%(num_rows-2)) + 1;
-        int y = (((int)rand())%(num_colums-2)) + 1;
-        if(grids[x][y].get_state() == '0'){
-            grids[x][y].set_state('1');
-            num_of_live_cells--;
-        }
-    }
-    update_neighborhood();
-}
-
-int grid::count_live_cells(){
-    int count = 0;
-    for(int i=0;i<num_rows;i++){
-        for(int j=0;j<num_colums;j++) if(grids[i][j].get_state() == '1') count++;
-    }
-    return count;
-}
 
 // Friend function
 ostream& operator<< (ostream & os, grid & g){

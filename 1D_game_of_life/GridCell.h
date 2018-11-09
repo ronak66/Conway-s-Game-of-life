@@ -29,7 +29,7 @@ class gridcell{
             state = ch;
         }
         void set_x(int x1){x = x1;}
-        void set_y(int y1){y = y1;}
+        void set_y(int y1){x = y1;}
         void set_neighborhood(int i,unsigned char a){
             neighborhood[i] = a;
         }
